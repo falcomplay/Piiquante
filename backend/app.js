@@ -22,6 +22,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Content-Security-Policy', "default-src 'self'");
     next();
   });
 
@@ -30,6 +31,7 @@ const expiryDate = new Date(Date.now() + 3600000); // 1 heure (60 * 60 * 1000)
 app.use(session({
   name: 'session',
   secret: process.env.SEC_SES,
+  keys: ['key1', 'key2'],
   cookie: {
     secure: true,
     httpOnly: true,
