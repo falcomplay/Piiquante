@@ -2,35 +2,33 @@ const mongoose = require('mongoose');
 const sanitizerPlugin = require('mongoose-sanitizer-plugin');
 const validate = require('mongoose-validator');
 
-// const sauceValidation = require('../middleware/sauceValidation');
-
-var nameValidator = [ // Validation du champ 'nom de la sauce'
+var nameValidator = [ 
 validate({
   validator: 'isLength',
-  arguments: [3, 60], // Le nom doit contenir entre 3 et 60 caractères
+  arguments: [3, 60], 
   message: 'Le nom de votre Sauce doit contenir entre 3 and 60 caractères',
 }),
 validate({
   validator: 'matches',
-  arguments: /^[a-z\d\-_\s]+$/i, // Regex pour restreindre le type de symboles utilisables
+  arguments: /^[a-z\d\-_\s]+$/i, 
   message: "Vous ne pouvez utiliser que des chiffres et des lettres pour nommer votre sauce",
 }),
 ];
 
-var manufacturerValidator = [ // Validation pour le manufacturer
+var manufacturerValidator = [ 
   validate({
     validator: 'isLength',
-    arguments: [3, 40], // Manufacturer doit contenir entre 3 et 40 caratères
+    arguments: [3, 40], 
     message: 'Le nom du fabricant doit contenir entre 3 et 40 caractères',
   }),
   validate({
     validator: 'matches',
-    arguments: /^[a-z\d\-_\s]+$/i, // Regex pour restreindre le type de symboles pour le manufacturer
+    arguments: /^[a-z\d\-_\s]+$/i, 
     message: "Vous ne pouvez utiliser que des chiffres et des lettres pour nommer le fabricant",
   }),
 ];
 
-var descriptionValidator = [ //  Validation pour la decription de la sauce
+var descriptionValidator = [
   validate({
     validator: 'isLength',
     arguments: [10, 150],
@@ -38,19 +36,19 @@ var descriptionValidator = [ //  Validation pour la decription de la sauce
   }),
   validate({
     validator: 'matches',
-    arguments: /^[a-z\d\-_\s]+$/i, // Regex pour restreindre le type de symboles pour la description de la sauce
+    arguments: /^[a-z\d\-_\s]+$/i,
     message: "Vous ne pouvez utiliser que des chiffres et des lettres pour la description de la sauce",
   }),
 ];
 
-var pepperValidator = [ // Validation pour le principal ingrédient de la sauce
+var pepperValidator = [
   validate({
     validator: 'isLength',
-    arguments: [3, 20], // Le principal ingrédient doit contenir entre 3 et 20 caractères
+    arguments: [3, 20], 
     message: 'Le principal ingrédient doit contenir entre 3 et 20 caractères',
   }),
   validate({
-    validator: 'isAlphanumeric', // Ne peut contenir que des caractères alphanumériques
+    validator: 'isAlphanumeric',
     message: "Ne peut contenir que des caractères alphanumériques entre 3 et 20 caractères",
   }),
 ];
