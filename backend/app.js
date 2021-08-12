@@ -13,6 +13,7 @@ const path = require("path"); // Plugin qui sert dans l'upload des images et per
 const helmet = require("helmet");
 const session = require("cookie-session");
 const nocache = require("nocache");
+require("dotenv").config();
 
 // Déclaration des routes
 const sauceRoutes = require("./routes/sauce");
@@ -20,10 +21,10 @@ const userRoutes = require("./routes/user");
 
 // Connection à la base de données MongoDB  -- Possibilitè d'utilisé une variable d'environnement pour plus de sécurité
 mongoose
-	.connect(
-		"mongodb+srv://new-userDB:sagat9011@cluster0.kfvhd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-		{ useNewUrlParser: true, useUnifiedTopology: true }
-	)
+	.connect(process.env.MONGOOSE_CONNECT.toString(), {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
 	.then(() => console.log("Connexion à MongoDB réussie !"))
 	.catch(() => console.log("Connexion à MongoDB échouée !"));
 
