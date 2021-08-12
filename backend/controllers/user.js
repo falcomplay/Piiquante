@@ -1,14 +1,14 @@
 const bcrypt = require("bcrypt"); // On utilise l'algorithme bcrypt pour hasher le mot de passe des utilisateurs
 const jwt = require("jsonwebtoken"); // On utilise le package jsonwebtoken pour attribuer un token à un utilisateur au moment où il se connecte
-const maskData = require("maskdata"); // On utilise le package maskdata pour cacher les donnés sensibles, ici l'adresse mail
+// const maskData = require("maskdata"); // On utilise le package maskdata pour cacher les donnés sensibles, ici l'adresse mail
 
 // Réglage du module maskdata
-const emailMaskOpt = {
-	maskWith: "*",
-	unmaskedStartCharactersBeforeAt: 1,
-	unmaskedEndCharactersAfterAt: 3,
-	maskAtTheRate: false,
-};
+// const emailMaskOpt = {
+// 	maskWith: "*",
+// 	unmaskedStartCharactersBeforeAt: 1,
+// 	unmaskedEndCharactersAfterAt: 3,
+// 	maskAtTheRate: false,
+// };
 
 const User = require("../models/User");
 
@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
 		.then((hash) => {
 			// On récupère le hash de mdp qu'on va enregister en tant que nouvel utilisateur dans la BBD mongoDB
 			const user = new User({
-				email: maskData.maskEmail2(req.body.email, emailMaskOpt),
+				email: req.body.email,
 				password: hash,
 			});
 			// On enregistre l'utilisateur dans la base de données
@@ -34,7 +34,7 @@ exports.signup = (req, res, next) => {
 
 // Le Middleware pour la connexion d'un utilisateur vérifie si l'utilisateur existe dans la base MongoDB lors du login
 exports.login = (req, res, next) => {
-	User.findOne({ email: maskData.maskEmail2(req.body.email, emailMaskOpt) })
+	User.findOne({ email: req.body.email })
 		.then((user) => {
 			if (!user) {
 				return res.status(401).json({ error: "Utilisateur non trouvé !" });
